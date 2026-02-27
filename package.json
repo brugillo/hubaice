@@ -1,4 +1,3 @@
-Removed packageManager: npm@10.9.0
 {
   "name": "hubaice",
   "private": true,
