@@ -1,0 +1,22 @@
+{
+  "name": "hubaice",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "db:generate": "npm -w packages/api run db:generate",
+    "db:migrate": "npm -w packages/api run db:migrate",
+    "db:push": "npm -w packages/api run db:push"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "npm@10.9.0",
+  "engines": {
+    "node": ">=20"
+  }
+}
