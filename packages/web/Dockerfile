@@ -32,7 +32,7 @@ COPY packages/web/package.json ./packages/web/
 RUN npm ci --workspace=packages/web --include-workspace-root --omit=dev
 
 COPY --from=base /app/packages/web/.next ./packages/web/.next
-COPY --from=base /app/packages/web/next.config.ts ./packages/web/next.config.ts
+COPY --from=base /app/packages/web/next.config.mjs ./packages/web/next.config.mjs
 
 # Public dir may not exist, create it to avoid COPY failure
 RUN mkdir -p ./packages/web/public
