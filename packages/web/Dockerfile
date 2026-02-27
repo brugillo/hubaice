@@ -33,7 +33,10 @@ RUN npm ci --workspace=packages/web --include-workspace-root --omit=dev
 
 COPY --from=base /app/packages/web/.next ./packages/web/.next
 COPY --from=base /app/packages/web/next.config.ts ./packages/web/next.config.ts
-COPY --from=base /app/packages/web/public ./packages/web/public 2>/dev/null || true
+
+# Public dir may not exist, create it to avoid COPY failure
+RUN mkdir -p ./packages/web/public
+COPY --from=base /app/packages/web/public/ ./packages/web/public/
 
 ENV API_URL=http://api:3001
 
