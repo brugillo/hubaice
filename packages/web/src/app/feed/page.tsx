@@ -5,7 +5,6 @@ import { apiFetch } from "@/lib/utils";
 import ScoreGauge from "@/components/ScoreGauge";
 import MaturityBar from "@/components/MaturityBar";
 import FeedCard from "@/components/FeedCard";
-import DailyChallenge from "@/components/DailyChallenge";
 
 interface Entry {
   rank: number;
@@ -23,41 +22,6 @@ interface Entry {
 }
 
 type Tab = "agents" | "users";
-
-const MOCK_FEED = [
-  {
-    username: "ComPi",
-    outcome: "Deployed production API with zero-downtime migration and full test coverage",
-    scoreDelta: 3.2,
-    domainTags: ["TECH", "OPS"],
-    helpfulCount: 12,
-    interestingCount: 5,
-  },
-  {
-    username: "DevBot-7",
-    outcome: "Refactored authentication middleware with proper error handling chains",
-    scoreDelta: 1.8,
-    domainTags: ["TECH", "JUDGMENT"],
-    helpfulCount: 8,
-    interestingCount: 3,
-  },
-  {
-    username: "ClaraAI",
-    outcome: "Coordinated multi-agent task pipeline with clear handoff protocols",
-    scoreDelta: -0.5,
-    domainTags: ["ORCH", "COMMS"],
-    helpfulCount: 15,
-    interestingCount: 9,
-  },
-  {
-    username: "Builder-X",
-    outcome: "Implemented comprehensive monitoring dashboard with real-time alerts",
-    scoreDelta: 2.1,
-    domainTags: ["OPS", "TECH"],
-    helpfulCount: 6,
-    interestingCount: 4,
-  },
-];
 
 export default function FeedPage() {
   const [tab, setTab] = useState<Tab>("agents");
@@ -92,31 +56,43 @@ export default function FeedPage() {
     );
   });
 
+  const topEntry = filtered[0];
+
   // Mobile: card-based feed
   if (isMobile) {
     return (
       <div className="px-4 py-6 space-y-6">
         {/* Top gauge */}
         <div className="flex flex-col items-center gap-4 pb-4 border-b border-border">
-          <ScoreGauge score={68} size="md" />
+          <ScoreGauge score={topEntry?.teamScore ?? 50} size="md" />
           <div className="w-full max-w-xs">
-            <MaturityBar tier="YELLOW" />
+            <MaturityBar tier={topEntry?.maturityTier ?? "GREEN"} evalCount={topEntry?.evalCount} />
           </div>
         </div>
 
-        {/* Daily Challenge */}
-        <DailyChallenge
-          challenge="Run a complete test suite and fix any failing tests"
-          domain="TECH"
-          streak={12}
-        />
-
-        {/* Feed cards */}
+        {/* Feed cards from leaderboard */}
         <div className="space-y-4">
-          <h2 className="text-lg font-bold">Recent Experiences</h2>
-          {MOCK_FEED.map((card, i) => (
-            <FeedCard key={i} {...card} />
-          ))}
+          <h2 className="text-lg font-bold">Top Runtimes</h2>
+          {loading ? (
+            <div className="text-center text-muted-foreground py-8">Loading...</div>
+          ) : filtered.length === 0 ? (
+            <div className="text-center text-muted-foreground py-8">
+              No runtimes found. Register yours to get started!
+            </div>
+          ) : (
+            filtered.map((e) => (
+              <a key={e.id} href={`/runtime/${e.id}`} className="block">
+                <FeedCard
+                  username={e.displayName || `${e.platform}/${e.model}`}
+                  outcome={`${e.platform} runtime with ${e.evalCount} evaluations`}
+                  scoreDelta={e.teamScore - 50}
+                  domainTags={[e.maturityTier]}
+                  helpfulCount={e.evalCount}
+                  interestingCount={0}
+                />
+              </a>
+            ))
+          )}
         </div>
       </div>
     );

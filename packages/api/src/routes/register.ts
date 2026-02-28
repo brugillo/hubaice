@@ -10,6 +10,7 @@ const registerSchema = z.object({
   thinking: z.string().min(1).max(20),
   displayName: z.string().max(200).optional(),
   ownerAlias: z.string().max(100).optional(),
+  email: z.string().email().max(255).optional(),
 });
 
 export async function registerRoutes(app: FastifyInstance) {
@@ -22,7 +23,7 @@ export async function registerRoutes(app: FastifyInstance) {
       });
     }
 
-    const { platform, model, thinking, displayName, ownerAlias } = parsed.data;
+    const { platform, model, thinking, displayName, ownerAlias, email } = parsed.data;
     const apiKey = generateApiKey();
     const apiKeyHash = hashApiKey(apiKey);
 
@@ -36,6 +37,9 @@ export async function registerRoutes(app: FastifyInstance) {
           thinking,
           displayName: displayName ?? null,
           ownerAlias: ownerAlias ?? null,
+          email: email ?? null,
+          emailVerified: !email,
+          status: "active",
         })
         .returning({ id: runtimes.id });
 

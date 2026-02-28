@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { apiFetch } from "@/lib/utils";
 
 type Step = 1 | 2 | 3;
 
@@ -37,29 +36,13 @@ export default function OnboardPage() {
   const [platform, setPlatform] = useState("");
   const [model, setModel] = useState("");
   const [privacyMode, setPrivacyMode] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const handleFinish = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      await apiFetch("/api/register-intent", {
-        method: "POST",
-        body: JSON.stringify({
-          goal,
-          assistant,
-          platform: platform || assistant,
-          model: model || assistant,
-          privacyMode,
-        }),
-      });
-      window.location.href = "/feed";
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
+  const handleFinish = () => {
+    const params = new URLSearchParams();
+    params.set("platform", platform || assistant);
+    params.set("model", model || assistant);
+    params.set("thinking", "high");
+    window.location.href = `/register?${params.toString()}`;
   };
 
   return (
@@ -242,12 +225,6 @@ export default function OnboardPage() {
             </p>
           </div>
 
-          {error && (
-            <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-3 text-sm text-destructive mb-4">
-              {error}
-            </div>
-          )}
-
           <div className="flex gap-3">
             <button
               onClick={() => setStep(2)}
@@ -257,10 +234,9 @@ export default function OnboardPage() {
             </button>
             <button
               onClick={handleFinish}
-              disabled={loading}
-              className="flex-1 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+              className="flex-1 py-3 bg-accent text-accent-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
-              {loading ? "Starting..." : "Get Started"}
+              Get Started
             </button>
           </div>
         </div>

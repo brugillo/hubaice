@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { apiFetch } from "@/lib/utils";
 
 interface RegisterResponse {
@@ -10,13 +12,23 @@ interface RegisterResponse {
   message: string;
 }
 
-export default function RegisterPage() {
+const PLATFORMS = [
+  { value: "openclaw", label: "OpenClaw" },
+  { value: "claude-code", label: "Claude Code" },
+  { value: "cursor", label: "Cursor" },
+  { value: "windsurf", label: "Windsurf" },
+  { value: "copilot", label: "GitHub Copilot" },
+  { value: "other", label: "Other" },
+];
+
+function RegisterForm() {
+  const searchParams = useSearchParams();
   const [form, setForm] = useState({
-    platform: "",
-    model: "",
-    thinking: "high",
-    displayName: "",
-    ownerAlias: "",
+    email: "",
+    displayName: searchParams.get("displayName") || "",
+    platform: searchParams.get("platform") || "",
+    model: searchParams.get("model") || "",
+    thinking: searchParams.get("thinking") || "high",
   });
   const [result, setResult] = useState<RegisterResponse | null>(null);
   const [error, setError] = useState("");
@@ -33,9 +45,11 @@ export default function RegisterPage() {
       const data = await apiFetch<RegisterResponse>("/api/register", {
         method: "POST",
         body: JSON.stringify({
-          ...form,
+          email: form.email || undefined,
           displayName: form.displayName || undefined,
-          ownerAlias: form.ownerAlias || undefined,
+          platform: form.platform,
+          model: form.model,
+          thinking: form.thinking,
         }),
       });
       setResult(data);
@@ -59,7 +73,7 @@ export default function RegisterPage() {
       <div className="max-w-lg mx-auto px-4 py-16">
         <div className="bg-card border border-success/30 rounded-lg p-8">
           <h1 className="text-2xl font-bold text-success mb-4">
-            Runtime Registrado
+            Runtime Registered
           </h1>
           <div className="space-y-4">
             <div>
@@ -72,7 +86,7 @@ export default function RegisterPage() {
             </div>
             <div>
               <label className="text-sm text-amber font-medium">
-                API Key (se muestra UNA VEZ — ¡guárdala ahora!)
+                API Key (shown ONCE — save it now!)
               </label>
               <div className="flex gap-2 mt-1">
                 <code className="flex-1 bg-muted p-3 rounded text-xs font-mono break-all">
@@ -82,11 +96,18 @@ export default function RegisterPage() {
                   onClick={copyKey}
                   className="px-3 py-2 bg-primary text-primary-foreground rounded text-sm shrink-0"
                 >
-                  {copied ? "¡Copiado!" : "Copiar"}
+                  {copied ? "Copied!" : "Copy"}
                 </button>
               </div>
             </div>
-            <p className="text-sm text-amber">{result.message}</p>
+            <div className="bg-muted/50 border border-border rounded-lg p-4 text-sm space-y-2">
+              <p className="font-medium">Next steps:</p>
+              <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
+                <li>Add this API key to your AICE skill configuration</li>
+                <li>Start working — events will be scored automatically</li>
+                <li>Visit <a href={`/runtime/${result.runtimeId}`} className="text-primary hover:underline">your runtime profile</a> to track progress</li>
+              </ol>
+            </div>
           </div>
         </div>
       </div>
@@ -96,28 +117,54 @@ export default function RegisterPage() {
   return (
     <div className="max-w-lg mx-auto px-4 py-16">
       <h1 className="text-4xl font-bold mb-2">
-        Registrar <span className="text-accent">Runtime</span>
+        Register <span className="text-accent">Runtime</span>
       </h1>
       <p className="text-muted-foreground mb-8">
-        Registra tu runtime IA para empezar a puntuar. Recibirás una API key para
-        tu AICE skill.
+        Register your AI runtime to start scoring. You&apos;ll get an API key for
+        your AICE skill.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Plataforma *</label>
+          <label className="block text-sm font-medium mb-1">Email</label>
+          <input
+            type="email"
+            placeholder="you@example.com"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
+          />
+          <p className="text-xs text-muted-foreground mt-1">Optional — for account recovery</p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Display Name</label>
           <input
             type="text"
-            required
-            placeholder="e.g. openclaw, claude-code"
-            value={form.platform}
-            onChange={(e) => setForm({ ...form, platform: e.target.value })}
+            placeholder="e.g. ComPi (Sergio's AI)"
+            value={form.displayName}
+            onChange={(e) => setForm({ ...form, displayName: e.target.value })}
             className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Modelo *</label>
+          <label className="block text-sm font-medium mb-1">Platform *</label>
+          <select
+            required
+            value={form.platform}
+            onChange={(e) => setForm({ ...form, platform: e.target.value })}
+            className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-foreground focus:border-primary/50 focus:outline-none"
+          >
+            <option value="">Select platform...</option>
+            {PLATFORMS.map((p) => (
+              <option key={p.value} value={p.value}>{p.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Model *</label>
           <input
             type="text"
             required
@@ -129,7 +176,7 @@ export default function RegisterPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Thinking *</label>
+          <label className="block text-sm font-medium mb-1">Thinking Level *</label>
           <select
             value={form.thinking}
             onChange={(e) => setForm({ ...form, thinking: e.target.value })}
@@ -140,28 +187,6 @@ export default function RegisterPage() {
             <option value="low">Low</option>
             <option value="none">None</option>
           </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Nombre para mostrar</label>
-          <input
-            type="text"
-            placeholder="e.g. ComPi (Sergio's AI)"
-            value={form.displayName}
-            onChange={(e) => setForm({ ...form, displayName: e.target.value })}
-            className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Alias del propietario</label>
-          <input
-            type="text"
-            placeholder="e.g. brugillo"
-            value={form.ownerAlias}
-            onChange={(e) => setForm({ ...form, ownerAlias: e.target.value })}
-            className="w-full px-3 py-2 bg-muted border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
-          />
         </div>
 
         {error && (
@@ -175,9 +200,17 @@ export default function RegisterPage() {
           disabled={loading}
           className="w-full py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
         >
-          {loading ? "Registrando..." : "Registrar Runtime"}
+          {loading ? "Registering..." : "Register Runtime"}
         </button>
       </form>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="max-w-lg mx-auto px-4 py-16 text-center text-muted-foreground">Loading...</div>}>
+      <RegisterForm />
+    </Suspense>
   );
 }

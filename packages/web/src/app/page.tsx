@@ -110,9 +110,9 @@ export default async function HomePage() {
 
             {/* Right: gauge + maturity */}
             <div className="flex flex-col items-center gap-6 animate-fade-in-up animate-delay-200">
-              <ScoreGauge score={73} size="lg" />
+              <ScoreGauge score={top.length > 0 ? top[0].teamScore : 73} size="lg" />
               <div className="w-full max-w-xs">
-                <MaturityBar tier="ORANGE" evalCount={142} />
+                <MaturityBar tier={top.length > 0 ? top[0].maturityTier : "ORANGE"} evalCount={top.length > 0 ? top[0].evalCount : 0} />
               </div>
             </div>
           </div>
@@ -126,9 +126,9 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <div className="grid grid-cols-3 gap-4 text-center">
             {[
-              { value: "120K+", label: "Users" },
-              { value: "4M+", label: "Collaborations" },
-              { value: "800+", label: "Verified Leaders" },
+              { value: stats ? String(stats.runtimes.active) : "0", label: "Active Runtimes" },
+              { value: stats ? String(stats.events.total) : "0", label: "Events Scored" },
+              { value: stats ? `${Math.round(stats.scores.avgTeam)}%` : "—", label: "Avg Team Score" },
             ].map((s) => (
               <div key={s.label}>
                 <div className="text-2xl sm:text-3xl font-bold font-mono text-primary">{s.value}</div>
