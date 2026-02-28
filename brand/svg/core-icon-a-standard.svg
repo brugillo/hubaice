@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Core Icon Variant A — Standard (64px+) -->
+  <!-- Refined Hexagonal Bidirectional Flow Hub -->
+  
+  <!-- Outer hexagon -->
+  <polygon points="100,10 178,47 178,122 100,160 22,122 22,47" 
+    stroke="#00FFFF" stroke-width="4" fill="none"/>
+  
+  <!-- Middle hexagon (rotated slightly smaller) -->
+  <polygon points="100,35 155,60 155,115 100,140 45,115 45,60" 
+    stroke="#00FFFF" stroke-width="3" fill="none"/>
+  
+  <!-- Inner hexagon (core) -->
+  <polygon points="100,60 130,75 130,105 100,120 70,105 70,75" 
+    stroke="#00FFFF" stroke-width="3" fill="none"/>
+  
+  <!-- Connection lines — outer to middle vertices -->
+  <line x1="100" y1="10" x2="100" y2="35" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="178" y1="47" x2="155" y2="60" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="178" y1="122" x2="155" y2="115" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="100" y1="160" x2="100" y2="140" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="22" y1="122" x2="45" y2="115" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="22" y1="47" x2="45" y2="60" stroke="#00FFFF" stroke-width="2"/>
+  
+  <!-- Connection lines — middle to inner vertices -->
+  <line x1="100" y1="35" x2="100" y2="60" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="155" y1="60" x2="130" y2="75" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="155" y1="115" x2="130" y2="105" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="100" y1="140" x2="100" y2="120" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="45" y1="115" x2="70" y2="105" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="45" y1="60" x2="70" y2="75" stroke="#00FFFF" stroke-width="2"/>
+  
+  <!-- Nodes at outer vertices -->
+  <circle cx="100" cy="10" r="5" fill="#00FFFF"/>
+  <circle cx="178" cy="47" r="5" fill="#00FFFF"/>
+  <circle cx="178" cy="122" r="5" fill="#00FFFF"/>
+  <circle cx="100" cy="160" r="5" fill="#00FFFF"/>
+  <circle cx="22" cy="122" r="5" fill="#00FFFF"/>
+  <circle cx="22" cy="47" r="5" fill="#00FFFF"/>
+  
+  <!-- Nodes at middle vertices -->
+  <circle cx="100" cy="35" r="4" fill="#00FFFF"/>
+  <circle cx="155" cy="60" r="4" fill="#00FFFF"/>
+  <circle cx="155" cy="115" r="4" fill="#00FFFF"/>
+  <circle cx="100" cy="140" r="4" fill="#00FFFF"/>
+  <circle cx="45" cy="115" r="4" fill="#00FFFF"/>
+  <circle cx="45" cy="60" r="4" fill="#00FFFF"/>
+  
+  <!-- Nodes at inner vertices -->
+  <circle cx="100" cy="60" r="3" fill="#00FFFF"/>
+  <circle cx="130" cy="75" r="3" fill="#00FFFF"/>
+  <circle cx="130" cy="105" r="3" fill="#00FFFF"/>
+  <circle cx="100" cy="120" r="3" fill="#00FFFF"/>
+  <circle cx="70" cy="105" r="3" fill="#00FFFF"/>
+  <circle cx="70" cy="75" r="3" fill="#00FFFF"/>
+  
+  <!-- Center dot -->
+  <circle cx="100" cy="90" r="4" fill="#00FFFF"/>
+  
+  <!-- Bidirectional flow arrows (subtle, mid-connections) -->
+  <!-- Top flow -->
+  <polygon points="97,22 100,16 103,22" fill="#00FFFF"/>
+  <polygon points="97,28 100,34 103,28" fill="#00FFFF"/>
+  <!-- Right-top flow -->
+  <polygon points="168,50 172,48 170,54" fill="#00FFFF"/>
+  <polygon points="162,56 158,58 160,52" fill="#00FFFF"/>
+</svg>

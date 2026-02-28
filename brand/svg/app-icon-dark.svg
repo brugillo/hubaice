@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- App Icon — Dark Background (Core on Charcoal) -->
+  
+  <!-- Rounded square background -->
+  <rect x="0" y="0" width="120" height="120" rx="24" fill="#1A2B3C"/>
+  
+  <!-- Inner hexagon structure (Variant B) -->
+  <!-- Outer hexagon -->
+  <polygon points="60,14 98,36 98,78 60,100 22,78 22,36" 
+    stroke="#00FFFF" stroke-width="3" fill="none"/>
+  
+  <!-- Inner hexagon -->
+  <polygon points="60,34 78,44 78,66 60,76 42,66 42,44" 
+    stroke="#00FFFF" stroke-width="2.5" fill="none"/>
+  
+  <!-- Connection lines -->
+  <line x1="60" y1="14" x2="60" y2="34" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="98" y1="36" x2="78" y2="44" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="98" y1="78" x2="78" y2="66" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="60" y1="100" x2="60" y2="76" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="22" y1="78" x2="42" y2="66" stroke="#00FFFF" stroke-width="2"/>
+  <line x1="22" y1="36" x2="42" y2="44" stroke="#00FFFF" stroke-width="2"/>
+  
+  <!-- Nodes -->
+  <circle cx="60" cy="14" r="3.5" fill="#00FFFF"/>
+  <circle cx="98" cy="36" r="3.5" fill="#00FFFF"/>
+  <circle cx="98" cy="78" r="3.5" fill="#00FFFF"/>
+  <circle cx="60" cy="100" r="3.5" fill="#00FFFF"/>
+  <circle cx="22" cy="78" r="3.5" fill="#00FFFF"/>
+  <circle cx="22" cy="36" r="3.5" fill="#00FFFF"/>
+  
+  <!-- Center -->
+  <circle cx="60" cy="57" r="3.5" fill="#00FFFF"/>
+</svg>

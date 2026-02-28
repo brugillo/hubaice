@@ -14,7 +14,7 @@ COPY packages/web/ ./packages/web/
 
 # Build
 ENV NEXT_TELEMETRY_DISABLED=1
-ARG API_URL=http://api:3001
+ARG API_URL=https://api.hubaice.com
 ENV API_URL=${API_URL}
 RUN npm run build -w packages/web
 
@@ -38,7 +38,7 @@ COPY --from=base /app/packages/web/next.config.mjs ./packages/web/next.config.mj
 RUN mkdir -p ./packages/web/public
 COPY --from=base /app/packages/web/public/ ./packages/web/public/
 
-ENV API_URL=http://api:3001
+ENV API_URL=https://api.hubaice.com
 
 EXPOSE 3000
 

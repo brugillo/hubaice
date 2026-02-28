@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Core Icon Variant B — Small (16-32px optimized) -->
+  <!-- Simplified for legibility at small sizes -->
+  
+  <!-- Outer hexagon -->
+  <polygon points="50,5 91,27 91,72 50,94 9,72 9,27" 
+    stroke="#00FFFF" stroke-width="4" fill="none"/>
+  
+  <!-- Inner hexagon -->
+  <polygon points="50,28 72,40 72,63 50,75 28,63 28,40" 
+    stroke="#00FFFF" stroke-width="3" fill="none"/>
+  
+  <!-- Connection lines -->
+  <line x1="50" y1="5" x2="50" y2="28" stroke="#00FFFF" stroke-width="2.5"/>
+  <line x1="91" y1="27" x2="72" y2="40" stroke="#00FFFF" stroke-width="2.5"/>
+  <line x1="91" y1="72" x2="72" y2="63" stroke="#00FFFF" stroke-width="2.5"/>
+  <line x1="50" y1="94" x2="50" y2="75" stroke="#00FFFF" stroke-width="2.5"/>
+  <line x1="9" y1="72" x2="28" y2="63" stroke="#00FFFF" stroke-width="2.5"/>
+  <line x1="9" y1="27" x2="28" y2="40" stroke="#00FFFF" stroke-width="2.5"/>
+  
+  <!-- Nodes at outer vertices -->
+  <circle cx="50" cy="5" r="4" fill="#00FFFF"/>
+  <circle cx="91" cy="27" r="4" fill="#00FFFF"/>
+  <circle cx="91" cy="72" r="4" fill="#00FFFF"/>
+  <circle cx="50" cy="94" r="4" fill="#00FFFF"/>
+  <circle cx="9" cy="72" r="4" fill="#00FFFF"/>
+  <circle cx="9" cy="27" r="4" fill="#00FFFF"/>
+  
+  <!-- Center dot -->
+  <circle cx="50" cy="51" r="4" fill="#00FFFF"/>
+</svg>

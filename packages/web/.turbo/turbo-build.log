@@ -1,0 +1,36 @@
+
+> @hubaice/web@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.12
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2.8s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7) 
+   Generating static pages (3/7) 
+   Generating static pages (5/7) 
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ƒ /                                      937 B         103 kB
+├ ○ /_not-found                            992 B         103 kB
+├ ○ /feed                                3.35 kB         106 kB
+├ ○ /leaderboard                         1.67 kB         104 kB
+├ ○ /onboard                             2.13 kB         104 kB
+├ ○ /register                            2.27 kB         104 kB
+├ ƒ /runtime/[id]                         111 kB         213 kB
+└ ƒ /share/[id]                          3.21 kB         105 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/18-b339bcfc88586b9e.js        46.1 kB
+  ├ chunks/87c73c54-24122e7b92478d00.js  54.2 kB
+  └ other shared chunks (total)          1.92 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

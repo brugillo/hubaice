@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- AICE Badge — (c) Minimal -->
+  
+  <!-- Thin hexagonal frame -->
+  <polygon points="50,5 93,27 93,72 50,94 7,72 7,27" 
+    stroke="#00FFFF" stroke-width="2" fill="none"/>
+  
+  <!-- AICE text - lighter weight -->
+  <text x="50" y="58" text-anchor="middle" 
+    font-family="Arial, Helvetica, sans-serif" font-weight="700" 
+    font-size="22" letter-spacing="3" fill="#00FFFF">AICE</text>
+</svg>
