@@ -43,11 +43,11 @@ async function getTopRuntimes(): Promise<LeaderboardEntry[]> {
 }
 
 const DOMAINS = [
-  { emoji: "\u{1F527}", code: "TECH", label: "Technical" },
-  { emoji: "\u{2699}\u{FE0F}", code: "OPS", label: "Operations" },
-  { emoji: "\u{1F9E0}", code: "JUDGMENT", label: "Judgment" },
-  { emoji: "\u{1F4AC}", code: "COMMS", label: "Comms" },
-  { emoji: "\u{1F3AF}", code: "ORCH", label: "Orchestration" },
+  { emoji: "\u{1F527}", code: "TECH", label: "Technical", user: "Clear specs, well-defined scope", agent: "Code quality, research, technical solutions" },
+  { emoji: "\u{2699}\u{FE0F}", code: "OPS", label: "Operations", user: "Follow processes, document decisions", agent: "Follow rules, format, memory, persistence" },
+  { emoji: "\u{1F9E0}", code: "JUDGMENT", label: "Judgment", user: "Strategic direction, product decisions", agent: "Vision, anticipation, correct decisions" },
+  { emoji: "\u{1F4AC}", code: "COMMS", label: "Comms", user: "Clear feedback, sufficient context", agent: "Right tone, timing, knowing when to stay silent" },
+  { emoji: "\u{1F3AF}", code: "ORCH", label: "Orchestration", user: "Team context, clear references", agent: "Delegation, follow-up, not doing everything alone" },
 ];
 
 const STEPS = [
@@ -139,23 +139,75 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 5 Domains */}
+      {/* 5 Domains — Bidirectional */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <h2 className="text-3xl font-bold text-center mb-4">
-          5 Domains of <span className="text-primary">AI Confidence</span>
+          Bidirectional Trust — <span className="text-primary">5 Domains</span>
         </h2>
         <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-12">
-          Bidirectional scoring across technical execution, operations, judgment, communication, and orchestration.
+          AICE scores both sides. The user and the agent each contribute to trust across every domain.
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+
+        {/* Column headers — desktop only */}
+        <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] gap-6 mb-6 px-2">
+          <div className="text-right text-sm font-semibold text-[#8A9BB0] uppercase tracking-wider">
+            👤 User
+          </div>
+          <div className="w-40" />
+          <div className="text-left text-sm font-semibold text-[#8A9BB0] uppercase tracking-wider">
+            🤖 Agent
+          </div>
+        </div>
+
+        {/* Domain rows */}
+        <div className="flex flex-col gap-4">
           {DOMAINS.map((d) => (
             <div
               key={d.code}
-              className="bg-card border border-border rounded-xl p-5 text-center hover:border-primary/40 transition-colors group"
+              className="bg-card border border-border rounded-xl p-5 hover:border-primary/40 transition-colors group"
             >
-              <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">{d.emoji}</div>
-              <div className="font-mono text-sm text-primary font-bold">{d.code}</div>
-              <div className="text-sm text-muted-foreground mt-1">{d.label}</div>
+              {/* Desktop: 3-column row */}
+              <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] gap-6 items-center">
+                {/* User side */}
+                <div className="text-right">
+                  <p className="text-sm text-[#8A9BB0]">{d.user}</p>
+                </div>
+
+                {/* Center domain */}
+                <div className="w-40 text-center flex flex-col items-center">
+                  <div className="flex items-center gap-2 justify-center">
+                    <span className="text-xs text-[#8A9BB0]">←</span>
+                    <div>
+                      <div className="text-2xl mb-1 group-hover:scale-110 transition-transform">{d.emoji}</div>
+                      <div className="font-mono text-sm font-bold" style={{ color: "#5FE0CF" }}>{d.code}</div>
+                    </div>
+                    <span className="text-xs text-[#8A9BB0]">→</span>
+                  </div>
+                  <div className="text-xs text-[#8A9BB0] mt-1">{d.label}</div>
+                </div>
+
+                {/* Agent side */}
+                <div className="text-left">
+                  <p className="text-sm text-[#8A9BB0]">{d.agent}</p>
+                </div>
+              </div>
+
+              {/* Mobile: stacked layout */}
+              <div className="md:hidden text-center">
+                <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">{d.emoji}</div>
+                <div className="font-mono text-sm font-bold mb-1" style={{ color: "#5FE0CF" }}>{d.code}</div>
+                <div className="text-xs text-[#8A9BB0] mb-3">{d.label}</div>
+                <div className="grid grid-cols-2 gap-4 text-left">
+                  <div>
+                    <div className="text-xs font-semibold text-[#8A9BB0] uppercase mb-1">👤 User</div>
+                    <p className="text-sm text-[#8A9BB0]">{d.user}</p>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-[#8A9BB0] uppercase mb-1">🤖 Agent</div>
+                    <p className="text-sm text-[#8A9BB0]">{d.agent}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
