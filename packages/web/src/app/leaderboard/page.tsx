@@ -57,9 +57,9 @@ export default function LeaderboardPage() {
   }, [tab, sort, platform]);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
       <h1 className="text-4xl font-bold mb-8">
-        <span className="text-accent">Leaderboard</span>
+        <span className="text-primary">Leaderboard</span>
       </h1>
 
       {/* Tabs */}
@@ -100,7 +100,7 @@ export default function LeaderboardPage() {
         )}
         <input
           type="text"
-          placeholder="Filtrar por plataforma..."
+          placeholder="Filter by platform..."
           value={platform}
           onChange={(e) => setPlatform(e.target.value)}
           className="px-3 py-1.5 bg-muted border border-border rounded text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
@@ -111,12 +111,12 @@ export default function LeaderboardPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-card border border-border rounded-lg overflow-hidden">
+      <div className="bg-card border border-border rounded-xl overflow-hidden">
         {loading ? (
-          <div className="p-8 text-center text-muted-foreground">Cargando...</div>
+          <div className="p-8 text-center text-muted-foreground">Loading...</div>
         ) : entries.length === 0 ? (
           <div className="p-8 text-center text-muted-foreground">
-            No hay runtimes con 10+ evaluaciones aún. ¡Registra el tuyo!
+            No runtimes with 10+ evaluations yet. Register yours!
           </div>
         ) : (
           <table className="w-full text-sm">
@@ -141,13 +141,15 @@ export default function LeaderboardPage() {
                     {e.rank}
                   </td>
                   <td className="px-4 py-3">
-                    <div className="font-medium">
-                      {e.displayName || `${e.platform}/${e.model}`}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      {e.platform}/{e.model}/{e.thinking}
-                      {e.ownerAlias && ` · ${e.ownerAlias}`}
-                    </div>
+                    <a href={`/runtime/${e.id}`} className="hover:text-primary transition-colors">
+                      <div className="font-medium">
+                        {e.displayName || `${e.platform}/${e.model}`}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {e.platform}/{e.model}/{e.thinking}
+                        {e.ownerAlias && ` · ${e.ownerAlias}`}
+                      </div>
+                    </a>
                   </td>
                   <td className="px-4 py-3 text-right font-mono font-bold text-primary">
                     {e.teamScore}%

@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0a0a0f;
-  --color-foreground: #e8e8f0;
-  --color-muted: #1a1a2e;
-  --color-muted-foreground: #8888a8;
-  --color-card: #12121e;
-  --color-card-foreground: #e8e8f0;
-  --color-border: #1e1e3a;
-  --color-primary: #2dd4bf;
-  --color-primary-foreground: #0a0a0f;
-  --color-accent: #a78bfa;
-  --color-accent-foreground: #0a0a0f;
+  --color-background: #0A0F14;
+  --color-foreground: #FFFFFF;
+  --color-muted: #121A22;
+  --color-muted-foreground: #8A9BB0;
+  --color-card: #121A22;
+  --color-card-foreground: #FFFFFF;
+  --color-border: #1A2B3C;
+  --color-primary: #5FE0CF;
+  --color-primary-foreground: #0A0F14;
+  --color-accent: #99FF00;
+  --color-accent-foreground: #0A0F14;
   --color-amber: #fbbf24;
-  --color-amber-foreground: #0a0a0f;
+  --color-amber-foreground: #0A0F14;
   --color-destructive: #f87171;
   --color-success: #34d399;
   --color-warning: #fbbf24;
@@ -32,3 +32,29 @@ body {
     border-color: var(--color-border);
   }
 }
+
+/* Score gauge animation */
+@keyframes gauge-fill {
+  from { stroke-dashoffset: 251.33; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+/* Staggered animations */
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }

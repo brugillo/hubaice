@@ -12,6 +12,42 @@ import {
   unique,
 } from "drizzle-orm/pg-core";
 
+// ── Registration intents (temporary, for skill-driven registration) ──
+
+export const registrationIntents = pgTable(
+  "registration_intents",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    platform: varchar("platform", { length: 100 }).notNull(),
+    model: varchar("model", { length: 100 }).notNull(),
+    thinking: varchar("thinking", { length: 20 }).notNull(),
+    displayName: varchar("display_name", { length: 200 }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    claimed: boolean("claimed").default(false),
+    claimedAt: timestamp("claimed_at", { withTimezone: true }),
+    ip: varchar("ip", { length: 45 }),
+  },
+  (t) => [
+    index("idx_intents_expires").on(t.expiresAt),
+  ]
+);
+
+// ── Users (for dashboard, future auth) ──
+
+export const users = pgTable(
+  "users",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    email: varchar("email", { length: 255 }).unique().notNull(),
+    passwordHash: varchar("password_hash", { length: 255 }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
+    lastLogin: timestamp("last_login", { withTimezone: true }),
+  }
+);
+
+// ── Runtimes ──
+
 export const runtimes = pgTable(
   "runtimes",
   {
@@ -67,11 +103,25 @@ export const runtimes = pgTable(
     // Daily caps tracking
     dailyCapsJson: jsonb("daily_caps_json").default({}),
     dailyCapsDate: date("daily_caps_date"),
+
+    // Registration flow (S1-F3)
+    email: varchar("email", { length: 255 }),
+    emailVerified: boolean("email_verified").default(false),
+    emailVerificationToken: varchar("email_verification_token", { length: 128 }),
+    emailTokenExpires: timestamp("email_token_expires", { withTimezone: true }),
+    status: varchar("status", { length: 20 }).default("active"),
+    intentId: uuid("intent_id").references(() => registrationIntents.id),
+    userId: uuid("user_id").references(() => users.id),
   },
   (t) => [
     unique("uq_runtime_identity").on(t.platform, t.model, t.thinking, t.ownerAlias),
+    index("idx_runtimes_email").on(t.email),
+    index("idx_runtimes_status").on(t.status),
+    index("idx_runtimes_user").on(t.userId),
   ]
 );
+
+// ── Interaction Events ──
 
 export const interactionEvents = pgTable(
   "interaction_events",
@@ -115,6 +165,8 @@ export const interactionEvents = pgTable(
   ]
 );
 
+// ── Daily Snapshots ──
+
 export const dailySnapshots = pgTable(
   "daily_snapshots",
   {
@@ -135,8 +187,12 @@ export const dailySnapshots = pgTable(
   ]
 );
 
+// ── Types ──
+
 export type Runtime = typeof runtimes.$inferSelect;
 export type NewRuntime = typeof runtimes.$inferInsert;
 export type InteractionEvent = typeof interactionEvents.$inferSelect;
 export type NewInteractionEvent = typeof interactionEvents.$inferInsert;
 export type DailySnapshot = typeof dailySnapshots.$inferSelect;
+export type RegistrationIntent = typeof registrationIntents.$inferSelect;
+export type User = typeof users.$inferSelect;

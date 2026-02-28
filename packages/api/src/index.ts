@@ -6,6 +6,10 @@ import { eventsRoutes } from "./routes/events.js";
 import { leaderboardRoutes } from "./routes/leaderboard.js";
 import { runtimeRoutes } from "./routes/runtime.js";
 import { statsRoutes } from "./routes/stats.js";
+import { registerIntentRoutes } from "./routes/register-intent.js";
+import { verifyRoutes } from "./routes/verify.js";
+import { confirmRoutes } from "./routes/confirm.js";
+import { importRoutes } from "./routes/import.js";
 
 const app = Fastify({ logger: true });
 
@@ -24,6 +28,10 @@ await app.register(eventsRoutes);
 await app.register(leaderboardRoutes);
 await app.register(runtimeRoutes);
 await app.register(statsRoutes);
+await app.register(registerIntentRoutes);
+await app.register(verifyRoutes);
+await app.register(confirmRoutes);
+await app.register(importRoutes);
 
 // Health check
 app.get("/api/health", async () => ({ status: "ok", timestamp: new Date().toISOString() }));
